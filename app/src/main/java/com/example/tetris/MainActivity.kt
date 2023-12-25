@@ -12,12 +12,9 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.DrawScope
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.tetris.ui.theme.TetrisTheme
@@ -52,61 +49,59 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 fun GameBoard() {
     Canvas(modifier = Modifier.fillMaxSize()) {
         drawRect(Color(0xFFFAAA02))
-//        drawRoundRect(
-//            Color.Blue, topLeft = Offset(50.dp.toPx(), 50.dp.toPx()),
-//            size = Size(width = 100.dp.toPx(), 100.dp.toPx()),
-//            cornerRadius = CornerRadius(x=10.dp.toPx(), 10.dp.toPx())
-//        )
         drawScreen(this)
+//        drawPath(path=Path().apply {
+//            this.lineTo(size.width, 0.dp.toPx())
+//            this.lineTo(size.width, size.height,)
+//            this.lineTo(0.dp.toPx(), size.height,)
+//            this.lineTo(0.dp.toPx(), 0.dp.toPx(),)
+//        }, color=Color(0xFFA17720), style = Stroke(width = 5.dp.toPx()))
 
     }
-}
-
-@Composable
-fun drawFigureLine() {
-    val paint = Paint()
-    paint.color = Color.Red
-    paint.strokeWidth = 5f
 }
 
 fun drawScreen(scope: DrawScope): DrawScope {
     val sizeX = 25.dp
     val sizeY = 25.dp
     val outline = 3.dp
-    var outlinePath: Path = Path()
-    var innerOutlinePath: Path = Path()
-    var path: Path = Path()
-    var pathTwo: Path = Path()
+
+    val outlinePath: Path = Path()
+    val innerOutlinePath: Path = Path()
+    val borderPath: Path = Path()
+    val pathTwo: Path = Path()
 
     return scope.apply {
-        outlinePath.moveTo(sizeX.toPx() - outline.toPx(), sizeY.toPx() - outline.toPx())
-        outlinePath.lineTo(this.size.width - sizeX.toPx() + outline.toPx(), sizeY.toPx() - outline.toPx())
-        outlinePath.lineTo(this.size.width - sizeX.toPx() + outline.toPx(), (this.size.height/3*2) - sizeY.toPx() + (outline.toPx()/2))
-        outlinePath.lineTo(this.size.width - sizeX.toPx() * 3 + (outline.toPx()/2), sizeY.toPx() + this.size.height/3*2 + outline.toPx())
-        outlinePath.lineTo(sizeX.toPx() - outline.toPx(), sizeY.toPx() + (this.size.height/3*2) + outline.toPx())
+        drawPath(path=outlinePath.apply {
+            this.moveTo(sizeX.toPx() - outline.toPx(), sizeY.toPx() - outline.toPx())
+            this.lineTo(size.width - sizeX.toPx() + outline.toPx(), sizeY.toPx() - outline.toPx())
+            this.lineTo(size.width - sizeX.toPx() + outline.toPx(), (size.height/3*2) - sizeY.toPx() + (outline.toPx()/2))
+            this.lineTo(size.width - sizeX.toPx() * 3 + (outline.toPx()/2), sizeY.toPx() + size.height/3*2 + outline.toPx())
+            this.lineTo(sizeX.toPx() - outline.toPx(), sizeY.toPx() + (size.height/3*2) + outline.toPx())
+        }, color=Color(0xFF0F0F0F))
 
-        path.moveTo(sizeX.toPx(), sizeY.toPx())
-        path.lineTo(this.size.width - sizeX.toPx(), sizeY.toPx())
-        path.lineTo(this.size.width - sizeX.toPx(), (this.size.height/3*2) - sizeY.toPx())
-        path.lineTo(this.size.width - sizeX.toPx() * 3, sizeY.toPx() + this.size.height/3*2)
-        path.lineTo(sizeX.toPx(), sizeY.toPx() + (this.size.height/3*2))
+        drawPath(path=borderPath.apply {
+            this.moveTo(sizeX.toPx(), sizeY.toPx())
+            this.lineTo(size.width - sizeX.toPx(), sizeY.toPx())
+            this.lineTo(size.width - sizeX.toPx(), (size.height/3*2) - sizeY.toPx())
+            this.lineTo(size.width - sizeX.toPx() * 3, sizeY.toPx() + size.height/3*2)
+            this.lineTo(sizeX.toPx(), sizeY.toPx() + (size.height/3*2))
+        }, color=Color(0xFF1A1A1A))
 
-        pathTwo.moveTo(sizeX.toPx() * 2 + outline.toPx(), sizeY.toPx() * 2 + outline.toPx())
-        pathTwo.lineTo(this.size.width - sizeX.toPx() * 2 - outline.toPx(), sizeY.toPx() * 2 + outline.toPx())
-        pathTwo.lineTo(this.size.width - sizeX.toPx() * 2 - outline.toPx(), (this.size.height/3*2) - (sizeY.toPx() * 1.5).toFloat() - (outline.toPx()/2))
-        pathTwo.lineTo(this.size.width - (sizeX.toPx() * 3.5).toFloat() - (outline.toPx()/2), (this.size.height/3*2) - (outline.toPx()))
-        pathTwo.lineTo(sizeX.toPx() * 2 + outline.toPx(), (this.size.height/3*2) - outline.toPx())
+        drawPath(path=innerOutlinePath.apply {
+            this.moveTo(sizeX.toPx() * 2, sizeY.toPx() * 2)
+            this.lineTo(size.width - sizeX.toPx() * 2, sizeY.toPx() * 2)
+            this.lineTo(size.width - sizeX.toPx() * 2, (size.height/3*2) - (sizeY.toPx() * 1.5).toFloat())
+            this.lineTo(size.width - (sizeX.toPx() * 3.5).toFloat(), (size.height/3*2))
+            this.lineTo(sizeX.toPx() * 2, (size.height/3*2))
+        }, color=Color(0xFF0F0F0F))
 
-        innerOutlinePath.moveTo(sizeX.toPx() * 2, sizeY.toPx() * 2)
-        innerOutlinePath.lineTo(this.size.width - sizeX.toPx() * 2, sizeY.toPx() * 2)
-        innerOutlinePath.lineTo(this.size.width - sizeX.toPx() * 2, (this.size.height/3*2) - (sizeY.toPx() * 1.5).toFloat())
-        innerOutlinePath.lineTo(this.size.width - (sizeX.toPx() * 3.5).toFloat(), (this.size.height/3*2))
-        innerOutlinePath.lineTo(sizeX.toPx() * 2, (this.size.height/3*2))
-
-        drawPath(path=outlinePath, color=Color(0xFF0F0F0F))
-        drawPath(path=path, color=Color(0xFF1A1A1A))
-        drawPath(path=innerOutlinePath, color=Color(0xFF0F0F0F))
-        drawPath(path=pathTwo, color=Color(0xFF373642))
+        drawPath(path=pathTwo.apply {
+            this.moveTo(sizeX.toPx() * 2 + outline.toPx(), sizeY.toPx() * 2 + outline.toPx())
+            this.lineTo(size.width - sizeX.toPx() * 2 - outline.toPx(), sizeY.toPx() * 2 + outline.toPx())
+            this.lineTo(size.width - sizeX.toPx() * 2 - outline.toPx(), (size.height/3*2) - (sizeY.toPx() * 1.5).toFloat() - (outline.toPx()/2))
+            this.lineTo(size.width - (sizeX.toPx() * 3.5).toFloat() - (outline.toPx()/2), (size.height/3*2) - (outline.toPx()))
+            this.lineTo(sizeX.toPx() * 2 + outline.toPx(), (size.height/3*2) - outline.toPx())
+        }, color=Color(0xFF373642))
     }
 }
 
