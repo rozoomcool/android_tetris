@@ -63,8 +63,8 @@ fun GameBoard() {
 }
 
 fun drawScreen(scope: DrawScope): DrawScope {
-    val sizeX = 25.dp
-    val sizeY = 25.dp
+    val insetX = 25.dp
+    val insetY = 25.dp
     val outline = 3.dp
     val rectSize: Float
 
@@ -74,6 +74,7 @@ fun drawScreen(scope: DrawScope): DrawScope {
     val pathTwo: Path = Path()
 
     return scope.apply {
+<<<<<<< Updated upstream
         drawPath(path = outlinePath.apply {
             rectSize = (size.width - (sizeX.toPx() * 2) - (outline.toPx() * 4)) / 10
 
@@ -139,6 +140,55 @@ fun drawScreen(scope: DrawScope): DrawScope {
             )
 
         }
+=======
+        drawPath(path=outlinePath.apply {
+            this.moveTo(insetX.toPx() - outline.toPx(), insetY.toPx() - outline.toPx())
+            this.lineTo(size.width - insetX.toPx() + outline.toPx(), insetY.toPx() - outline.toPx())
+            this.lineTo(size.width - insetX.toPx() + outline.toPx(), (size.height/3*2) - insetY.toPx() + (outline.toPx()/2))
+            this.lineTo(size.width - insetX.toPx() * 3 + (outline.toPx()/2), insetY.toPx() + size.height/3*2 + outline.toPx())
+            this.lineTo(insetX.toPx() - outline.toPx(), insetY.toPx() + (size.height/3*2) + outline.toPx())
+        }, color=Color(0xFF0F0F0F))
+
+        drawPath(path=borderPath.apply {
+            this.moveTo(insetX.toPx(), insetY.toPx())
+            this.lineTo(size.width - insetX.toPx(), insetY.toPx())
+            this.lineTo(size.width - insetX.toPx(), (size.height/3*2) - insetY.toPx())
+            this.lineTo(size.width - insetX.toPx() * 3, insetY.toPx() + size.height/3*2)
+            this.lineTo(insetX.toPx(), insetY.toPx() + (size.height/3*2))
+        }, color=Color(0xFF1A1A1A))
+
+        drawPath(path=innerOutlinePath.apply {
+            this.moveTo(insetX.toPx() * 2, insetY.toPx() * 2)
+            this.lineTo(size.width - insetX.toPx() * 2, insetY.toPx() * 2)
+            this.lineTo(size.width - insetX.toPx() * 2, (size.height/3*2) - (insetY.toPx() * 1.5).toFloat())
+            this.lineTo(size.width - (insetX.toPx() * 3.5).toFloat(), (size.height/3*2))
+            this.lineTo(insetX.toPx() * 2, (size.height/3*2))
+        }, color=Color(0xFF0F0F0F))
+
+        drawPath(path=pathTwo.apply {
+            this.moveTo(insetX.toPx() * 2 + outline.toPx(), insetY.toPx() * 2 + outline.toPx())
+            this.lineTo(size.width - insetX.toPx() * 2 - outline.toPx(), insetY.toPx() * 2 + outline.toPx())
+            this.lineTo(size.width - insetX.toPx() * 2 - outline.toPx(), (size.height/3*2) - (insetY.toPx() * 1.5).toFloat() - (outline.toPx()/2))
+            this.lineTo(size.width - (insetX.toPx() * 3.5).toFloat() - (outline.toPx()/2), (size.height/3*2) - (outline.toPx()))
+            this.lineTo(insetX.toPx() * 2 + outline.toPx(), (size.height/3*2) - outline.toPx())
+        }, color=Color(0xFF373642))
+>>>>>>> Stashed changes
+    }
+}
+
+fun scoreBoard(scope: DrawScope){
+    val insetX = 25.dp
+    val insetY = 25.dp
+    val outline = 3.dp
+
+    scope.apply {
+        drawPath(path=Path().apply {
+            this.moveTo(insetX.toPx() * 2 + outline.toPx(), insetY.toPx() * 2 + outline.toPx())
+            this.lineTo(size.width - insetX.toPx() * 2 - outline.toPx(), insetY.toPx() * 2 + outline.toPx())
+            this.lineTo(size.width - insetX.toPx() * 2 - outline.toPx(), (size.height/3*2) - (insetY.toPx() * 1.5).toFloat() - (outline.toPx()/2))
+            this.lineTo(size.width - (insetX.toPx() * 3.5).toFloat() - (outline.toPx()/2), (size.height/3*2) - (outline.toPx()))
+            this.lineTo(insetX.toPx() * 2 + outline.toPx(), (size.height/3*2) - outline.toPx())
+        }, color=Color(0xFFFFFFFF))
     }
 }
 

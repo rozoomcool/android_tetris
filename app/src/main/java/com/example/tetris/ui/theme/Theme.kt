@@ -17,13 +17,13 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
-        primary = Purple80,
+        primary = YellowDark,
         secondary = PurpleGrey80,
         tertiary = Pink80
 )
 
 private val LightColorScheme = lightColorScheme(
-        primary = Purple40,
+        primary = Yellow,
         secondary = PurpleGrey40,
         tertiary = Pink40
 
@@ -58,7 +58,7 @@ fun TetrisTheme(
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
-            window.statusBarColor = Color(0xFFFAAA02).toArgb()
+            window.statusBarColor = Color(0xFFFFAAA02).toArgb()
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
         }
     }
